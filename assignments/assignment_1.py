@@ -41,3 +41,51 @@ def sell(products):
     print("Select a product to sell:")
     for i, product in enumerate(products.keys(), start=1):
         print(f"{i}. {product}")
+    #get the product number
+    product_number = int(input("Enter the product number: "))
+    #validate the product number
+    if product_number < 1 or product_number > len(products):
+        print("Invalid product number.")
+        return
+    #get the product name
+    product_name = list(products.keys())[product_number - 1]
+    #get the quantity
+    quantity = int(input("Enter the quantity: "))
+    #validate the quantity
+    if quantity < 0:
+        print("Quantity cannot be negative.")
+        return
+    # Check that quantity is lee than or equal to the available quantity
+    if quantity > products[product_name]:
+        print(f"Not enough {product_name} in stock. Available quantity is {products[product_name]}.")
+        return
+    # Reduce the quantity of the product
+    products[product_name] -= quantity
+    print(f"Sold {quantity} {product_name}(s).")
+    # Print the updated inventory
+    print_inventory(products)
+
+# Function to restock a product
+def restock(products):
+    print("Restock a product:")
+    #display products with numbers
+    print("Select a product to restock:")
+    for i, product in enumerate(products.keys(), start=1):
+        print(f"{i}. {product}")
+    #get the product number
+    product_number = int(input("Enter the product number: "))
+    #validate the product number
+    if product_number < 1 or product_number > len(products):
+        print("Invalid product number.")
+        return
+    #get the product name
+    product_name = list(products.keys())[product_number - 1]
+    #get the quantity
+    quantity = int(input("Enter the quantity: "))
+    #validate the quantity
+    if quantity < 0:
+        print("Quantity cannot be negative.")
+        return
+    # Add the new product to the inventory
+    products[product_name] += quantity
+    print(f"Product {product_name} restocked with quantity {quantity}.")
