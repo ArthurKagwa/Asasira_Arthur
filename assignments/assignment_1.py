@@ -89,3 +89,30 @@ def restock(products):
     # Add the new product to the inventory
     products[product_name] += quantity
     print(f"Product {product_name} restocked with quantity {quantity}.")
+    # Print the updated inventory
+    print_inventory(products+'\n\n')
+
+# start loop
+def main():
+    while True:
+        print("1. Print inventory")
+        print("2. Add product")
+        print("3. Sell product")
+        print("4. Restock product")
+        print("5. Exit\n\n")
+        choice = input("Enter your choice: ")
+        if choice == "1":
+            print_inventory(products)
+        elif choice == "2":
+            add_product(products)
+        elif choice == "3":
+            sell(products)
+        elif choice == "4":
+            restock(products)
+        elif choice == "5":
+            break
+        else:
+            print("Invalid choice.")
+
+
+main()
