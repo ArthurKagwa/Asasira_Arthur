@@ -16,7 +16,7 @@ class Car(Vehicle):
     Methods:
         __init__(brand, model): Initializes a new Car instance.
         show_brand(speed=0): Displays the car's brand, model, and speed.
-    """
+    """   
     def __init__(self, brand, model):
         super().__init__(brand)
         self.model = model
