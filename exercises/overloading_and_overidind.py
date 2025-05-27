@@ -6,6 +6,17 @@ class Vehicle():
         print(f"brand:{self.brand}")
     
 class Car(Vehicle):
+    """
+    A class representing a car, which is a specialized type of Vehicle.
+    This class extends the Vehicle class to include model-specific information.
+    It also overrides the show_brand method to include model and speed details.
+    Attributes:
+        brand (str): The brand of the car, inherited from Vehicle.
+        model (str): The model of the car.
+    Methods:
+        __init__(brand, model): Initializes a new Car instance.
+        show_brand(speed=0): Displays the car's brand, model, and speed.
+    """
     def __init__(self, brand, model):
         super().__init__(brand)
         self.model = model
