@@ -17,9 +17,9 @@ class Student(Person):
 
     def display_info(self):
         super().display_info()
-        print(f"Student ID: {self.student_id}")
-        
-        
+        print(f"Student ID: {self.student_id} \n")
+
+
 class Lecturer(Person):
     def __init__(self, name, age, employee_id):
         super().__init__(name, age)
@@ -27,7 +27,7 @@ class Lecturer(Person):
 
     def display_info(self):
         super().display_info()
-        print(f"Employee ID: {self.employee_id}")
+        print(f"Employee ID: {self.employee_id} \n")
         
         
 class Staff(Person):
@@ -37,14 +37,16 @@ class Staff(Person):
 
     def display_info(self):
         super().display_info()
-        print(f"Staff ID: {self.staff_id}")
+        print(f"Staff ID: {self.staff_id} \n")
         
 # Example usage
 
 student = Student("Arthur", 20, "23/U/06534/PS")
 lecturer = Lecturer("Dr. Dragule", 45, "LE7890")
 staff = Staff("Bob", 35, "STF11223")
+person = Person("Alice", 30)
 
 student.display_info()
 lecturer.display_info()
 staff.display_info()
+person.display_info()
