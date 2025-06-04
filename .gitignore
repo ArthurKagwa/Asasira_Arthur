@@ -1,0 +1,25 @@
+# ignore venv
+# Python virtual environment
+venv/
+# Python virtual environment (Windows)
+ENV/
+# Python virtual environment (macOS/Linux)
+env/
+# Python bytecode files
+__pycache__/
+*.pyc
+*.pyo
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+
+eggs/
+.eggs/
+lib/
+lib64/
+parts/      
+ml/venv/
+sdist/
