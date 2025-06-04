@@ -23,3 +23,5 @@ lib64/
 parts/      
 ml/venv/
 sdist/
+.DS_Store
+*.egg-info
