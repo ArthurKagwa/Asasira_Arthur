@@ -17,3 +17,6 @@ print("Keras version:", keras.__version__)
 # set random seeds for reproducibility
 tf.random.set_seed(42)
 np.random.seed(42)
+
+IMAGE_SIZE = (256,256)
+BATCH_SIZE = 32
