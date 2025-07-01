@@ -5,76 +5,86 @@ import datetime
 import time
 import os
 import dotenv
+from together import Together
+from requests_oauthlib import OAuth1
+import requests
 
 # Load environment variables from .env file
 dotenv.load_dotenv('/Users/arthur/recess/Asasira_Arthur/.env')
 
-# Tweepy authentication
-API_KEY = os.getenv('API_KEY')
-API_SECRET = os.getenv('API_SECRET')
-ACCESS_TOKEN = os.getenv('ACCESS_TOKEN')
-ACCESS_SECRET = os.getenv('ACCESS_SECRET')
 
-auth = tweepy.OAuth1UserHandler(API_KEY, API_SECRET, ACCESS_TOKEN, ACCESS_SECRET)
-api = tweepy.API(auth)
 
-# Logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s')
+# Load Together AI API key
+TOGETHER_API_KEY = os.getenv('TOGETHER_API_KEY')
+MODEL = os.getenv('MODEL')
 
-# Posts - 30 engaging Python tips and facts for daily posting
-post_ideas = [
-    "💡 Did you know? Python is named after the British comedy group Monty Python!",
-    "⚡ Tip: Use list comprehensions for cleaner and more efficient code in Python.",
-    "📚 Python's Zen: 'Readability counts.' Always write code that is easy to read and understand.",
-    "🎉 Fun fact: Python was created by Guido van Rossum and first released in 1991.",
-    "🔄 Python supports multiple programming paradigms: procedural, object-oriented, and functional programming.",
-    "💬 Did you know? Python has a built-in function called 'help()' that provides documentation for any object or module.",
-    "📖 Python's standard library is vast and includes modules for everything from web development to data analysis.",
-    "🌐 Tip: Use virtual environments to manage dependencies for different Python projects.",
-    "🧘 Python's 'import this' command reveals the Zen of Python - guiding principles for writing computer programs.",
-    "🚀 Python is widely used in data science, machine learning, web development, automation, and many other fields.",
-    "👥 Python has a large and active community that contributes to its growth and development worldwide.",
-    "🐍 Python's syntax is designed to be readable and straightforward, making it perfect for beginners.",
-    "⚙️ Python is interpreted, not compiled, which makes development and testing faster.",
-    "🔧 Use f-strings for string formatting: f'Hello {name}!' - cleaner than .format() or % formatting.",
-    "📊 Python excels in data visualization with libraries like Matplotlib, Plotly, and Seaborn.",
-    "🤖 Machine learning in Python is powered by libraries like scikit-learn, TensorFlow, and PyTorch.",
-    "🌍 Python runs on virtually every operating system: Windows, macOS, Linux, and more.",
-    "💾 Python's garbage collection automatically manages memory, reducing memory leaks.",
-    "🔍 Use enumerate() when you need both index and value in loops: for i, item in enumerate(list):",
-    "📦 pip is Python's package installer - use 'pip install package_name' to add new libraries.",
-    "🎯 Python follows the principle 'There should be one obvious way to do it' (from Zen of Python).",
-    "🔒 Python supports multiple inheritance, but be careful - it can make code complex!",
-    "⏰ Use time.sleep() to pause execution, but consider asyncio for better performance in async code.",
-    "📝 Python's docstrings help document your functions: use triple quotes for multi-line descriptions.",
-    "🔄 List slicing is powerful: my_list[start:end:step] gives you flexible data extraction.",
-    "🧮 Python handles big integers automatically - no overflow errors like in other languages!",
-    "🎨 Code formatting matters: Use tools like Black or autopep8 to maintain consistent style.",
-    "🔧 Python's lambda functions are perfect for short, one-line functions in functional programming.",
-    "📈 Python's popularity continues to grow - it's consistently ranked as one of the top programming languages.",
-    "🎓 Whether you're a beginner or expert, Python's simplicity and power make it an excellent choice for any project!"
-]
+auth = OAuth1(
+    os.getenv("API_KEY"),
+    os.getenv("API_SECRET"),
+    os.getenv("ACCESS_TOKEN"),
+    os.getenv("ACCESS_SECRET")
+)
 
-def message():
-    today = datetime.date.today()
-    start_date = datetime.date(2023, 10, 1)  # Set your starting date
-    index = (today - start_date).days % len(post_ideas)
+# Graded Assignment (20): Create an AI agent that automates tasks of creating posts on social media platforms # like X.com (formerly Twitter)using Python.
 
-    message = post_ideas[index]
+# Set up logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler("climate_tweet_bot.log"),
+        logging.StreamHandler()
+    ]
+)
+client = Together(api_key=TOGETHER_API_KEY)
+
+def generate_climate_tweet():
+    prompt = (
+        "Write a short, engaging tweet (max 280 characters) about climate action, sustainability, or environmental protection. "
+        "Make it positive, actionable, and suitable for a general audience. Maintain an African context."
+    )
     try:
-        api.update_status(message)
-        logging.info(f"Posted: {message}")
+        response = client.chat.completions.create(
+            model=MODEL,
+            messages=[
+                {
+                    "role": "user",
+                    "content": prompt
+                }
+            ]
+        )
+        tweet = response.choices[0].message.content.strip()
+        tweet = tweet[:280]
+        logging.info(f"Generated tweet: {tweet}")
+        return tweet
     except Exception as e:
-        logging.error(f"Failed to post: {e}")
+        logging.error(f"Error generating tweet: {e}")
+        return None
 
-# Scheduler (once per day at a fixed time)
-import schedule
+def post_tweet(tweet):
+    if not tweet:
+        logging.warning("No tweet text provided. Skipping post.")
+        return
 
-POST_TIME = os.getenv('POST_TIME', '11:57')  # Default to 11:57 if not set
-schedule.every().day.at(POST_TIME).do(message)
+    url = "https://api.twitter.com/2/tweets"
+    payload = {"text": tweet}
+    try:
+        resp = requests.post(url, auth=auth, json=payload)
+        if resp.status_code == 201:
+            logging.info(f"Tweet posted successfully: {tweet}")
+        else:
+            logging.error(f"Failed to post tweet: {resp.status_code} - {resp.text}")
+    except Exception as e:
+        logging.error(f"Exception while posting tweet: {e}")
+
+# 2025-07-01 15:17:08,435 - ERROR - Failed to post tweet: 403 - {"title":"Forbidden","status":403,"detail":"Your client app is not configured with the appropriate oauth1 app permissions for this endpoint.","type":"https://api.twitter.com/2/problems/oauth1-permissions"}
+
+# due to need to upgrade
 
 if __name__ == "__main__":
-    logging.info("Starting post agent...")
     while True:
-        schedule.run_pending()
-        time.sleep(60)
+        tweet = generate_climate_tweet()
+        post_tweet(tweet)
+        logging.info("Sleeping for 6 hours before next tweet.")
+        time.sleep(6 * 60 * 60)
+

@@ -1,0 +1,20 @@
+2025-07-01 14:56:15,635 - ERROR - Error generating tweet: 'output'
+2025-07-01 14:56:15,636 - WARNING - No tweet text provided. Skipping post.
+2025-07-01 14:56:15,636 - INFO - Sleeping for 6 hours before next tweet.
+2025-07-01 14:57:47,349 - ERROR - Error generating tweet: 'output'
+2025-07-01 14:57:47,349 - WARNING - No tweet text provided. Skipping post.
+2025-07-01 14:57:47,349 - INFO - Sleeping for 6 hours before next tweet.
+2025-07-01 15:00:25,358 - INFO - Generated tweet: "Let's green our future! In Africa, we can make a difference by using eco-friendly bags, conserving water & reducing waste. Join the #Sustainability movement & take action today! Together, we can protect our continent's natural beauty for generations to come #GoGreenAfrica"
+2025-07-01 15:00:25,911 - ERROR - Error posting tweet: 403 Forbidden
+453 - You currently have access to a subset of X API V2 endpoints and limited v1.1 endpoints (e.g. media post, oauth) only. If you need access to this endpoint, you may need a different access level. You can learn more here: https://developer.x.com/en/portal/product
+2025-07-01 15:00:25,912 - INFO - Sleeping for 6 hours before next tweet.
+2025-07-01 15:04:32,033 - INFO - Generated tweet: "Let's green our future! In Africa, we can make a difference by using eco-friendly bags, conserving water & reducing waste. Join the #AfricanClimateAction movement & take small steps today for a sustainable tomorrow! #GoGreen #Sustainability"
+2025-07-01 15:04:32,649 - ERROR - Error posting tweet: 403 Forbidden
+453 - You currently have access to a subset of X API V2 endpoints and limited v1.1 endpoints (e.g. media post, oauth) only. If you need access to this endpoint, you may need a different access level. You can learn more here: https://developer.x.com/en/portal/product
+2025-07-01 15:04:32,650 - INFO - Sleeping for 6 hours before next tweet.
+2025-07-01 15:15:37,531 - INFO - Generated tweet: "Let's grow a greener future! In Africa, we can make a difference by using eco-friendly bags, conserving water & reducing waste. Join the #AfricanClimateAction movement & take small steps today to protect our continent's natural beauty for generations to come! #Sustainability"
+2025-07-01 15:15:37,533 - ERROR - Exception while posting tweet: Only unicode objects are escapable. Got None of type <class 'NoneType'>.
+2025-07-01 15:15:37,534 - INFO - Sleeping for 6 hours before next tweet.
+2025-07-01 15:17:07,845 - INFO - Generated tweet: "Let's green our future! In Africa, we can make a difference by using eco-friendly bags, conserving water & reducing waste. Join the #AfricanClimateAction movement & take 3 simple steps: Reduce, Reuse, Recycle! Together, we can protect our continent's natural beauty #Sustainabili
+2025-07-01 15:17:08,435 - ERROR - Failed to post tweet: 403 - {"title":"Forbidden","status":403,"detail":"Your client app is not configured with the appropriate oauth1 app permissions for this endpoint.","type":"https://api.twitter.com/2/problems/oauth1-permissions"}
+2025-07-01 15:17:08,435 - INFO - Sleeping for 6 hours before next tweet.
