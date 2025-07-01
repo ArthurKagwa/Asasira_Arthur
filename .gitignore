@@ -28,3 +28,4 @@ sdist/
 .venv
 
 *.env
+.env
