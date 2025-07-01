@@ -26,3 +26,5 @@ sdist/
 .DS_Store
 *.egg-info
 .venv
+
+*.env
